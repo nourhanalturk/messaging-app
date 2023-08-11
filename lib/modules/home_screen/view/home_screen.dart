@@ -26,13 +26,14 @@ class HomeScreen extends StatelessWidget {
                   children: [
                     Expanded(
                       child: TextFormField(
-                        decoration: const InputDecoration(
+                        decoration:  InputDecoration(
                           border: InputBorder.none,
                           prefixIcon: Icon(
                             Icons.search,
-                            color: Colors.grey,),
+                            color: ManagerColors.grey600,
+                            ),
                           hintText: 'Search',
-                          hintStyle: TextStyle(
+                          hintStyle: const TextStyle(
                               color: Colors.grey,
                               fontSize: 18.0
                           ),
