@@ -12,7 +12,7 @@ void main() async {
   await CacheHelper.init();
 
   String? uId = CacheHelper.getData(key: 'uid');
-  print('uId from shared preferences: $uId');
+  print('uId: $uId');
 
   runApp(MyApp(startWidget: uId != null ? HomeScreen() : LoginScreen()));
 }
