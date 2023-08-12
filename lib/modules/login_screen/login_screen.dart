@@ -7,6 +7,8 @@ import 'package:messaging_app/managers/sting_manager/string_manager.dart';
 import 'package:messaging_app/modules/home_screen/view/home_screen.dart';
 import 'package:messaging_app/modules/login_screen/controller.dart';
 import 'package:messaging_app/modules/sign_up_screen/view/sign_up_screen.dart';
+import 'package:messaging_app/shared_pref/shared_pref.dart';
+import 'package:messaging_app/sharing/constance.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -69,10 +71,10 @@ class LoginScreen extends StatelessWidget {
                       onPressed: (){
                         controller.userLogin();
                         Get.offAll(()=> HomeScreen());
-                        // if(controller.isLoggedSuccess.value)
-                        //   {
-                        //     Get.offAll(()=> HomeScreen());
-                        //   }
+                      //   if(CacheHelper.getData(key: uId) != null)
+                      //     {
+                      //       Get.offAll(()=> HomeScreen());
+                      //     }
                       },
                       child: Text(
                         ManagerStrings.login,
