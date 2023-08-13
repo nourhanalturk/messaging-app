@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:messaging_app/managers/color_managers/colors.dart';
 import 'package:messaging_app/modules/home_screen/view/chat_details.dart';
 
+import '../../../sharing/constance.dart';
 import '../../login_screen/model.dart';
 import '../controller/home_controller.dart';
 
@@ -15,7 +16,13 @@ class MessagesContent extends StatelessWidget {
         return Expanded(
         child: ListView.separated(
           itemCount: controller.users.length,
-          itemBuilder: (BuildContext context, int index) => buildUsers(context,controller.users[index]),
+          itemBuilder: (BuildContext context, int index) {
+            if(controller.users[index].uId!= uId){
+            return buildUsers(context,controller.users[index]);
+            }else{
+              return SizedBox.shrink();
+            }
+            },
           separatorBuilder: (BuildContext context, int index)=> SizedBox(height: 8.0,)
         )
       );

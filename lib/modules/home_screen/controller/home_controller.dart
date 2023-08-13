@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:messaging_app/modules/home_screen/model/message_model.dart';
 import 'package:messaging_app/modules/login_screen/model.dart';
@@ -31,10 +32,13 @@ class HomeController extends GetxController{
           {
             print('=====================================success');
             users.add(UserModel.fromJson(element.data()));
-            update();
           });
+          print('USERS======');
+
+          print(users);
     })
         .catchError((error){
+          print('big erorrrrrrrr ======');
           print(error.toString());
     });
       }
@@ -55,13 +59,15 @@ class HomeController extends GetxController{
       print(error.toString());
     });
   }
+  TextEditingController textController = TextEditingController();
+  MessageModel? messageModel;
 
   void sendMessage({
     required text ,
     required time ,
     required receiverId ,
 }){
-    MessageModel messageModel = MessageModel(
+     messageModel = MessageModel(
       receiverId: receiverId,
       senderId: userModel!.uId,
       text: text,
@@ -73,7 +79,7 @@ class HomeController extends GetxController{
         .collection('chats')
         .doc(receiverId)
         .collection('messages')
-        .add(messageModel.toMap())
+        .add(messageModel!.toMap())
         .then((value) {})
         .catchError((error){
           print(error.toString());
@@ -85,14 +91,39 @@ class HomeController extends GetxController{
         .collection('chats')
         .doc(uId)
         .collection('messages')
-        .add(messageModel.toMap())
+        .add(messageModel!.toMap())
         .then((value) {})
         .catchError((error){
       print(error.toString());
     });
 
+
+
   }
 
+  List<MessageModel> messages =[];
+  void getMessages({
+    required receiverId
+}){
+    FirebaseFirestore.instance
+        .collection('users')
+        .doc(userModel!.uId)
+        .collection('chats')
+        .doc(receiverId)
+        .collection('messages')
+        .orderBy('time')
+        .snapshots()
+        .listen((event) {
+          messages =[];
+          event.docs.forEach((element) { 
+            messages.add(MessageModel.fromJson(element.data()));
+            update();
+          });
+    })
+        .onError((error){
+          print(error);
+    });
+  }
   @override
   void onInit() {
     super.onInit();
